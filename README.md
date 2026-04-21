@@ -40,14 +40,14 @@ DATABASE_URL="file:./dev.db"
 SESSION_TTL_HOURS="720"
 ```
 
-For Coolify, use:
+For Coolify (or Docker), use:
 
 ```bash
-DATABASE_URL="file:/data/nfp.db"
+SQLITE_FILE_PATH="/var/lib/nfp/nfp.db"
 SESSION_TTL_HOURS="720"
 ```
 
-Attach a persistent volume mounted at `/data`.
+Attach a persistent volume mounted at `/var/lib/nfp`.
 
 ## Local Setup
 
@@ -119,10 +119,23 @@ Notes:
 ## Coolify Deployment
 
 1. Deploy with included `Dockerfile`.
-2. Add persistent volume mounted to `/data`.
-3. Set `DATABASE_URL=file:/data/nfp.db`.
+2. Add persistent volume mounted to `/var/lib/nfp`.
+3. Set `SQLITE_FILE_PATH=/var/lib/nfp/nfp.db`.
 4. Expose port `3000`.
 5. Keep start command as default (`npm run start:prod`).
+
+## Docker Run Example
+
+```bash
+docker build -t nfp-tracker .
+docker run -d \
+  --name nfp-tracker \
+  -p 3000:3000 \
+  -v nfp_data:/var/lib/nfp \
+  -e SQLITE_FILE_PATH=/var/lib/nfp/nfp.db \
+  -e SESSION_TTL_HOURS=720 \
+  nfp-tracker
+```
 
 ## Safety Positioning
 
