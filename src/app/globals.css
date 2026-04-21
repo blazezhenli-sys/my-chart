@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --bg-a: #09090b;
+  --bg-b: #1f0505;
+  --text: #fef08a;
+}
+
+@theme inline {
+  --color-background: var(--bg-a);
+  --color-foreground: var(--text);
+  --font-sans: var(--font-space-grotesk);
+  --font-serif: var(--font-lora);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: var(--text);
+  font-family: var(--font-space-grotesk), sans-serif;
+  line-height: 1.45;
+  background: linear-gradient(180deg, var(--bg-a) 0%, var(--bg-b) 70%);
+}
+
+input,
+select,
+textarea {
+  background: #0f0f14;
+  color: #fef08a;
+  border-color: rgba(127, 29, 29, 0.8);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(253, 224, 71, 0.55);
+}
+
+h1,
+h2,
+h3 {
+  letter-spacing: -0.02em;
+}
