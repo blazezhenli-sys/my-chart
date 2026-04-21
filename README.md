@@ -137,6 +137,18 @@ docker run -d \
   nfp-tracker
 ```
 
+## Docker Compose
+
+```bash
+docker compose up -d --build
+```
+
+This uses [docker-compose.yml](/Users/blazezhenli/conductor/workspaces/my-chart/stockholm/docker-compose.yml) with:
+- service name: `app`
+- published port: `3000`
+- named volume: `nfp_data` mounted to `/var/lib/nfp`
+- SQLite path: `SQLITE_FILE_PATH=/var/lib/nfp/nfp.db`
+
 ## Safety Positioning
 
 This app is educational and charting-only. It does not diagnose or treat medical conditions.

@@ -1,0 +1,17 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nfp-tracker
+    ports:
+      - "3000:3000"
+    environment:
+      SQLITE_FILE_PATH: /var/lib/nfp/nfp.db
+      SESSION_TTL_HOURS: "720"
+    volumes:
+      - nfp_data:/var/lib/nfp
+    restart: unless-stopped
+
+volumes:
+  nfp_data:
