@@ -121,7 +121,7 @@ Notes:
 1. Deploy with included `Dockerfile`.
 2. Add persistent volume mounted to `/var/lib/nfp`.
 3. Set `SQLITE_FILE_PATH=/var/lib/nfp/nfp.db`.
-4. Expose port `3000`.
+4. Set `PORT` (container listen port) and `HOST_PORT` (published host port) if needed.
 5. Keep start command as default (`npm run start:prod`).
 
 ## Docker Run Example
@@ -130,8 +130,9 @@ Notes:
 docker build -t nfp-tracker .
 docker run -d \
   --name nfp-tracker \
-  -p 3000:3000 \
+  -p "${HOST_PORT:-3000}:${PORT:-3000}" \
   -v nfp_data:/var/lib/nfp \
+  -e PORT="${PORT:-3000}" \
   -e SQLITE_FILE_PATH=/var/lib/nfp/nfp.db \
   -e SESSION_TTL_HOURS=720 \
   nfp-tracker
@@ -143,9 +144,15 @@ docker run -d \
 docker compose up -d --build
 ```
 
+If port `3000` is already in use, run:
+
+```bash
+HOST_PORT=3001 docker compose up -d --build
+```
+
 This uses [docker-compose.yml](/Users/blazezhenli/conductor/workspaces/my-chart/stockholm/docker-compose.yml) with:
 - service name: `app`
-- published port: `3000`
+- published port: `HOST_PORT` -> `PORT` (defaults to `3000:3000`)
 - named volume: `nfp_data` mounted to `/var/lib/nfp`
 - SQLite path: `SQLITE_FILE_PATH=/var/lib/nfp/nfp.db`
 
