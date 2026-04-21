@@ -2,7 +2,8 @@ FROM node:20-bookworm-slim AS deps
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 COPY package.json package-lock.json ./
-RUN npm ci
+COPY prisma ./prisma
+RUN npm ci && npm run prisma:generate
 
 FROM deps AS builder
 COPY . .
