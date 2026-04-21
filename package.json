@@ -1,0 +1,42 @@
+{
+  "name": "nfp-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "start": "next start",
+    "start:prod": "prisma migrate deploy && next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy",
+    "prisma:dev": "prisma migrate dev",
+    "seed:account": "node scripts/seed-account.mjs",
+    "seed:data:creighton": "node scripts/seed-creighton-data.mjs"
+  },
+  "dependencies": {
+    "@prisma/client": "6.6.0",
+    "argon2": "^0.40.3",
+    "next": "16.2.3",
+    "prisma": "6.6.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^20.19.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "eslint": "^9.38.0",
+    "eslint-config-next": "16.2.3",
+    "playwright": "^1.54.2",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.3",
+    "vitest": "^2.1.5"
+  }
+}
