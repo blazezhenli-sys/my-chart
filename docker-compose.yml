@@ -8,7 +8,8 @@ services:
       - "${HOST_PORT:-3000}:${PORT:-3000}"
     environment:
       PORT: "${PORT:-3000}"
-      SQLITE_FILE_PATH: /var/lib/nfp/nfp.db
+      SQLITE_FILE_PATH: "${SQLITE_FILE_PATH:-/var/lib/nfp/nfp.db}"
+      DATABASE_URL: "file:${SQLITE_FILE_PATH:-/var/lib/nfp/nfp.db}"
       SESSION_TTL_HOURS: "720"
     volumes:
       - nfp_data:/var/lib/nfp

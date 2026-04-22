@@ -1,6 +1,7 @@
 FROM node:20-bookworm-slim AS deps
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 COPY package.json package-lock.json ./
 COPY prisma ./prisma
 RUN npm ci && npm run prisma:generate
@@ -17,7 +18,8 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 ENV SQLITE_FILE_PATH=/var/lib/nfp/nfp.db
 
-RUN mkdir -p /var/lib/nfp
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/* \
+  && mkdir -p /var/lib/nfp
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json

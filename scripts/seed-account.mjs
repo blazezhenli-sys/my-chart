@@ -38,6 +38,21 @@ function loadEnvFileIfNeeded() {
   }
 }
 
+function deriveDatabaseUrlFromSqliteFilePath() {
+  if (process.env.DATABASE_URL) {
+    return;
+  }
+
+  const sqliteFilePath = process.env.SQLITE_FILE_PATH?.trim();
+  if (!sqliteFilePath) {
+    return;
+  }
+
+  process.env.DATABASE_URL = sqliteFilePath.startsWith("file:")
+    ? sqliteFilePath
+    : `file:${sqliteFilePath}`;
+}
+
 function requireEnv(name) {
   const value = process.env[name]?.trim();
   if (!value) {
@@ -48,6 +63,7 @@ function requireEnv(name) {
 
 async function main() {
   loadEnvFileIfNeeded();
+  deriveDatabaseUrlFromSqliteFilePath();
 
   const prisma = new PrismaClient();
 

@@ -37,6 +37,21 @@ function loadEnvFileIfNeeded() {
   }
 }
 
+function deriveDatabaseUrlFromSqliteFilePath() {
+  if (process.env.DATABASE_URL) {
+    return;
+  }
+
+  const sqliteFilePath = process.env.SQLITE_FILE_PATH?.trim();
+  if (!sqliteFilePath) {
+    return;
+  }
+
+  process.env.DATABASE_URL = sqliteFilePath.startsWith("file:")
+    ? sqliteFilePath
+    : `file:${sqliteFilePath}`;
+}
+
 function toUtcDate(isoDay) {
   const [year, month, day] = isoDay.split("-").map(Number);
   return new Date(Date.UTC(year, month - 1, day));
@@ -157,6 +172,7 @@ const CYCLE_TWO_PATTERN = [
 
 async function main() {
   loadEnvFileIfNeeded();
+  deriveDatabaseUrlFromSqliteFilePath();
 
   const prisma = new PrismaClient();
 
